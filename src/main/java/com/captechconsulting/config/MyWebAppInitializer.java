@@ -1,6 +1,6 @@
 package com.captechconsulting.config;
 
-import com.captechconsulting.filter.XUserAgentFilter;
+import com.captechconsulting.filter.RequiredHeaderFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
@@ -36,7 +36,7 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         addEncodingFilter(container);
 
         // Register X-User-Agent filter
-        addXUserAgentFilter(container);
+        addRequiredHeaderFilter(container);
 
         // Register LoggingFilter
         addLoggingFilter(container);
@@ -70,8 +70,8 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         fr.addMappingForUrlPatterns(null, true, "/*");
     }
 
-    private void addXUserAgentFilter(ServletContext container) {
-        FilterRegistration.Dynamic fr = container.addFilter("xUserAgentFilter", new XUserAgentFilter());
+    private void addRequiredHeaderFilter(ServletContext container) {
+        FilterRegistration.Dynamic fr = container.addFilter("requiredHeaderFilter", new RequiredHeaderFilter());
         fr.addMappingForUrlPatterns(null, true, "/*");
     }
 

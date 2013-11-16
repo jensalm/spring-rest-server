@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.PostConstruct;
-
 @Transactional
 @Controller
 @RequestMapping("/user")
@@ -25,12 +23,8 @@ public class UserFacade {
     @Autowired
     private UserService userService;
 
-    @PostConstruct
-    public void init() {
-    }
-
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET,
-            produces = Versions.ACCEPT_HEADER_V1_0)
+            produces = Versions.ACCEPT_HEADER_V1_0, consumes = Versions.ACCEPT_HEADER_V1_0)
     public
     @ResponseBody
     User getUser(@PathVariable long userId) {
