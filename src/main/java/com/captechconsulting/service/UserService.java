@@ -17,4 +17,12 @@ public class UserService {
         return userDao.findById(id);
     }
 
+    public User store(User user) {
+
+        if (user.getId() != null) {
+            return userDao.update(user);
+        } else {
+            return userDao.create(user);
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.captechconsulting.domain;
 
 import com.captechconsulting.validators.Email;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String firstName;
 
@@ -21,15 +20,14 @@ public class User {
     @Email
     private String email;
 
-    @JsonIgnore
     @NotNull
     private String password;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

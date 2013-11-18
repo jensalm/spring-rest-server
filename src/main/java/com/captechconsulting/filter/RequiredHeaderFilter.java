@@ -23,7 +23,7 @@ public class RequiredHeaderFilter extends OncePerRequestFilter {
         for (String header : REQIURED_HEADERS) {
             if (request.getHeader(header) == null) {
                 response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-                response.setContentType(Versions.ACCEPT_HEADER_V1_0);
+                response.setContentType(Versions.V1_0);
                 response.getWriter().println(getErrorJson(header));
                 return;
             }

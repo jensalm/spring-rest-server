@@ -21,7 +21,7 @@ import java.util.Set;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({MissingServletRequestParameterException.class,
             MethodArgumentNotValidException.class, UnsatisfiedServletRequestParameterException.class,
             ServletRequestBindingException.class
@@ -35,7 +35,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public @ResponseBody
@@ -46,7 +46,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({EntityNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public @ResponseBody
@@ -57,7 +57,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({DataIntegrityViolationException.class})
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public @ResponseBody
@@ -69,7 +69,7 @@ public class DefaultExceptionHandler {
     }
 
 /*
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({DuplicateException.class})
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public @ResponseBody
@@ -82,7 +82,7 @@ public class DefaultExceptionHandler {
     }
 */
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({DataAccessException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody
@@ -93,7 +93,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.ACCEPT_HEADER_V1_0)
+    @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler({Exception.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody

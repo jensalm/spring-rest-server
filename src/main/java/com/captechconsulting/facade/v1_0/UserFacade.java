@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Transactional
 @Controller
@@ -24,7 +21,7 @@ public class UserFacade {
     private UserService userService;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET,
-            produces = Versions.ACCEPT_HEADER_V1_0, consumes = Versions.ACCEPT_HEADER_V1_0)
+            produces = Versions.V1_0, consumes = Versions.V1_0)
     public
     @ResponseBody
     User getUser(@PathVariable long userId) {
@@ -36,6 +33,37 @@ public class UserFacade {
             log.trace("Found user [" + user.toString() + "]");
         }
         return user;
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.POST,
+            produces = Versions.V1_0, consumes = Versions.V1_0)
+    public
+    @ResponseBody
+    User store(@PathVariable long userId, @RequestBody User user) {
+        if (log.isDebugEnabled()) {
+            log.debug("Reguest for storing user [" + user + "]");
+        }
+        user.setId(userId);
+        User persisted = userService.store(user);
+        if (log.isTraceEnabled()) {
+            log.trace("Stored user [" + persisted + "]");
+        }
+        return persisted;
+    }
+
+    @RequestMapping(method = RequestMethod.POST,
+            produces = Versions.V1_0, consumes = Versions.V1_0)
+    public
+    @ResponseBody
+    User store(@RequestBody User user) {
+        if (log.isDebugEnabled()) {
+            log.debug("Reguest for storing user [" + user + "]");
+        }
+        User persisted = userService.store(user);
+        if (log.isTraceEnabled()) {
+            log.trace("Stored user [" + persisted + "]");
+        }
+        return persisted;
     }
 
 
