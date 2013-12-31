@@ -1,10 +1,13 @@
-package com.captechconsulting.facade.v1_0;
+package com.captechconsulting.facade.v1_0.controllers;
 
 import com.captechconsulting.facade.Versions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -47,10 +50,10 @@ public class DefaultExceptionHandler {
     }
 
     @RequestMapping(produces = Versions.V1_0)
-    @ExceptionHandler({EntityNotFoundException.class})
+    @ExceptionHandler({ObjectRetrievalFailureException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public @ResponseBody
-    Map handleValidationException(EntityNotFoundException ex) throws IOException {
+    Map handleValidationException(ObjectRetrievalFailureException ex) throws IOException {
         Map<String, Object> map = Maps.newHashMap();
         map.put("error", "Entity Not Found");
         map.put("cause", ex.getMessage());
@@ -90,6 +93,18 @@ public class DefaultExceptionHandler {
         Map<String, Object> map = Maps.newHashMap();
         map.put("error", "Data Error");
         map.put("cause", ex.getCause().getMessage());
+        return map;
+    }
+
+    @RequestMapping(produces = Versions.V1_0)
+    @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
+    @ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    public @ResponseBody
+    Map handleUnsupportedMediaTypeException(HttpMediaTypeNotSupportedException ex) throws IOException {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("error", "Unsupported Media Type");
+        map.put("cause", ex.getLocalizedMessage());
+        map.put("supported", ex.getSupportedMediaTypes());
         return map;
     }
 

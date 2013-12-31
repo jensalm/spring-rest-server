@@ -1,4 +1,4 @@
-package com.captechconsulting.validators;
+package com.captechconsulting.facade.v1_0.validators;
 
 import javax.validation.constraints.Pattern;
 import java.lang.annotation.Documented;
@@ -11,7 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target( { METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Documented
-@Pattern(regexp = "^[A-Za-z0-9]+$", message = "{error.validation.not_alphanumeric}")
-public @interface Alphanumeric {
-
+@Pattern(regexp = "^[0-9]+$", message = "{error.validation.not_numeric}")
+public @interface Numeric {
 }

@@ -1,4 +1,4 @@
-package com.captechconsulting.dao;
+package com.captechconsulting.core.dao;
 
 import org.springframework.dao.DataAccessException;
 

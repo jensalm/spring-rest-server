@@ -1,8 +1,9 @@
-package com.captechconsulting.dao;
+package com.captechconsulting.core.dao;
 
 import org.springframework.dao.DataAccessException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.Valid;
@@ -22,7 +23,11 @@ public class AbstractJPADao<T> implements Dao<T> {
 
     @Override
     public T findById(long id) throws DataAccessException {
-        return entityManager.find(clazz, id);
+        final T t = entityManager.find(clazz, id);
+        if (t != null) {
+            return t;
+        }
+        throw new EntityNotFoundException("No ["+clazz.getCanonicalName()+"] with id ["+id+"]");
     }
 
     @Override

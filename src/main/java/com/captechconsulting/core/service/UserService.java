@@ -1,7 +1,7 @@
-package com.captechconsulting.service;
+package com.captechconsulting.core.service;
 
-import com.captechconsulting.dao.UserDao;
-import com.captechconsulting.domain.User;
+import com.captechconsulting.core.dao.UserDao;
+import com.captechconsulting.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

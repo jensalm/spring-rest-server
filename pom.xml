@@ -149,6 +149,13 @@
             <version>${org.springframework.version}</version>
         </dependency>
 
+        <!-- Conversion -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+
         <!-- Validation -->
         <dependency>
             <groupId>org.hibernate</groupId>

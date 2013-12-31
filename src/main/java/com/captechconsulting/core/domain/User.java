@@ -1,6 +1,4 @@
-package com.captechconsulting.domain;
-
-import com.captechconsulting.validators.Email;
+package com.captechconsulting.core.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +15,6 @@ public class User {
     private String lastName;
 
     @NotNull
-    @Email
     private String email;
 
     @NotNull

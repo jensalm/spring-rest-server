@@ -1,4 +1,4 @@
-package com.captechconsulting.validators;
+package com.captechconsulting.facade.v1_0.validators;
 
 import javax.validation.constraints.Pattern;
 import java.lang.annotation.Documented;

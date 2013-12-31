@@ -1,6 +1,6 @@
-package com.captechconsulting.dao;
+package com.captechconsulting.core.dao;
 
-import com.captechconsulting.domain.User;
+import com.captechconsulting.core.domain.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
