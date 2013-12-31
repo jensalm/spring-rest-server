@@ -32,13 +32,13 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         // Manage the lifecycle of the root application context
         container.addListener(new ContextLoaderListener(rootContext));
 
-        // Register EncodingFilter
+        // Register Encoding Filter
         addEncodingFilter(container);
 
-        // Register X-User-Agent filter
+        // Register Required Header filter
         addRequiredHeaderFilter(container);
 
-        // Register LoggingFilter
+        // Register Logging Filter
         addLoggingFilter(container);
 
         // Register and map the dispatcher servlet

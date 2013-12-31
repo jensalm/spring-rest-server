@@ -26,7 +26,7 @@ public class UserFacade {
     @ResponseBody
     User getUser(@PathVariable long userId) {
         if (log.isDebugEnabled()) {
-            log.debug("Reguest for user [" + userId + "]");
+            log.debug("Request for user [" + userId + "]");
         }
         User user = userService.getUser(userId);
         if (log.isTraceEnabled()) {
@@ -41,7 +41,7 @@ public class UserFacade {
     @ResponseBody
     User store(@PathVariable long userId, @RequestBody User user) {
         if (log.isDebugEnabled()) {
-            log.debug("Reguest for storing user [" + user + "]");
+            log.debug("Request to store user [" + user + "]");
         }
         user.setId(userId);
         User persisted = userService.store(user);
@@ -57,7 +57,7 @@ public class UserFacade {
     @ResponseBody
     User store(@RequestBody User user) {
         if (log.isDebugEnabled()) {
-            log.debug("Reguest for storing user [" + user + "]");
+            log.debug("Request to store user [" + user + "]");
         }
         User persisted = userService.store(user);
         if (log.isTraceEnabled()) {

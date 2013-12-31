@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class RequiredHeaderFilter extends OncePerRequestFilter {
 
-    private static final String[] REQIURED_HEADERS = new String[] {"Accept", "X-User-Agent"};
+    private static final String[] REQUIRED_HEADERS = new String[] {"Accept", "X-User-Agent"};
 
     public RequiredHeaderFilter() {
     }
@@ -20,7 +20,7 @@ public class RequiredHeaderFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        for (String header : REQIURED_HEADERS) {
+        for (String header : REQUIRED_HEADERS) {
             if (request.getHeader(header) == null) {
                 response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
                 response.setContentType(Versions.V1_0);
@@ -35,6 +35,7 @@ public class RequiredHeaderFilter extends OncePerRequestFilter {
     private String getErrorJson(String header) {
         return "{ " +
                 "\"error\": \"Missing header\", " +
-                "\"cause\": \"HTTP header '" + header + "' is required.\" }";
+                "\"cause\": \"HTTP header '" + header + "' is required.\"" +
+                " }";
     }
 }
