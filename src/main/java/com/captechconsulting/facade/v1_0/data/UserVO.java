@@ -4,8 +4,8 @@ import com.captechconsulting.facade.v1_0.validators.Alphanumeric;
 import com.captechconsulting.facade.v1_0.validators.Email;
 import com.captechconsulting.facade.v1_0.validators.Password;
 import com.captechconsulting.facade.v1_0.validators.UserPasswords;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.dozer.Mapping;
+
+import javax.validation.constraints.NotNull;
 
 @UserPasswords
 public class UserVO {
@@ -19,14 +19,13 @@ public class UserVO {
     private String lastName;
 
     @Email
+    @NotNull
     private String email;
 
-    @Mapping("password")
-    @JsonIgnore
     @Password
-    private String newPassword;
+    private String password;
 
-    private String verifyPassword;
+    private String confirmPassword;
 
     public Long getId() {
         return id;
@@ -60,20 +59,20 @@ public class UserVO {
         this.email = email;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getVerifyPassword() {
-        return verifyPassword;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setVerifyPassword(String verifyPassword) {
-        this.verifyPassword = verifyPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     @Override
@@ -87,8 +86,8 @@ public class UserVO {
                 !(firstName != null ? !firstName.equals(userVO.firstName) : userVO.firstName != null) &&
                 !(id != null ? !id.equals(userVO.id) : userVO.id != null) &&
                 !(lastName != null ? !lastName.equals(userVO.lastName) : userVO.lastName != null) &&
-                !(newPassword != null ? !newPassword.equals(userVO.newPassword) : userVO.newPassword != null) &&
-                !(verifyPassword != null ? !verifyPassword.equals(userVO.verifyPassword) : userVO.verifyPassword != null);
+                !(password != null ? !password.equals(userVO.password) : userVO.password != null) &&
+                !(confirmPassword != null ? !confirmPassword.equals(userVO.confirmPassword) : userVO.confirmPassword != null);
 
     }
 
@@ -98,14 +97,14 @@ public class UserVO {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (newPassword != null ? newPassword.hashCode() : 0);
-        result = 31 * result + (verifyPassword != null ? verifyPassword.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (confirmPassword != null ? confirmPassword.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "UserVO{ id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' + ", newPassword='" + newPassword + '\'' + ", verifyPassword='" + verifyPassword + '\'' + '}';
+                ", email='" + email + '\'' + ", password='" + password + '\'' + ", confirmPassword='" + confirmPassword + '\'' + '}';
     }
 }

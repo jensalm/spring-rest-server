@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface UserPasswords {
 
-    String message() default "{error.validation.password_not_allowed}";
+    String message() default "{error.validation.password_do_not_match}";
 
     Class<?>[] groups() default {};
 
@@ -38,11 +38,11 @@ public @interface UserPasswords {
         @Override
         public boolean isValid(UserVO user, ConstraintValidatorContext constraintValidatorContext) {
 
-            if (StringUtils.isBlank(user.getNewPassword()) && StringUtils.isBlank(user.getVerifyPassword())) {
+            if (StringUtils.isBlank(user.getPassword()) && StringUtils.isBlank(user.getConfirmPassword())) {
                 return true;
             }
 
-            if (user.getNewPassword().equals(user.getVerifyPassword())) {
+            if (user.getPassword().equals(user.getConfirmPassword())) {
                 return true;
             }
 

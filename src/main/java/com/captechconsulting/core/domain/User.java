@@ -1,7 +1,6 @@
 package com.captechconsulting.core.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -14,10 +13,10 @@ public class User {
 
     private String lastName;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
     public Long getId() {

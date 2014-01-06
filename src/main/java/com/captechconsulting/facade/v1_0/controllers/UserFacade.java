@@ -37,32 +37,40 @@ public class UserFacade {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("Found user [" + user.toString() + "]");
         }
-        return mapper.map(user, UserVO.class);
+        return mapToUserVO(user);
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.POST, produces = Versions.V1_0, consumes = Versions.V1_0)
-    public @ResponseBody UserVO store(@PathVariable long userId, @Valid @RequestBody UserVO user) {
+    public @ResponseBody UserVO update(@PathVariable long userId, @Valid @RequestBody UserVO user) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Request to store user [" + user + "]");
         }
         user.setId(userId);
-        User persisted = userService.store(mapper.map(user, User.class));
+        User mappedUser = mapper.map(user, User.class);
+        User persisted = userService.store(mappedUser);
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("Stored user [" + persisted + "]");
         }
-        return mapper.map(persisted, UserVO.class);
+        return mapToUserVO(persisted);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = Versions.V1_0, consumes = Versions.V1_0)
-    public @ResponseBody UserVO store(@RequestBody UserVO user) {
+    public @ResponseBody UserVO create(@Valid @RequestBody UserVO user) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Request to store user [" + user + "]");
         }
-        User persisted = userService.store(mapper.map(user, User.class));
+        User mappedUser = mapper.map(user, User.class);
+        User persisted = userService.store(mappedUser);
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("Stored user [" + persisted + "]");
         }
-        return mapper.map(persisted, UserVO.class);
+        return mapToUserVO(persisted);
+    }
+
+    private UserVO mapToUserVO(User persisted) {
+        UserVO user = mapper.map(persisted, UserVO.class);
+        user.setPassword(null);
+        return user;
     }
 
 }
