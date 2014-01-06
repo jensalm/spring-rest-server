@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target( { METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Documented
-@Pattern(regexp = "(^(?=.*\\d).{4,255}$)?", message = "{error.validation.password_not_allowed}")
+@Pattern(regexp = "(^(?=.*\\d).{5,255}$)?", message = "{error.validation.password_not_allowed}")
 public @interface Password {
 
 }
