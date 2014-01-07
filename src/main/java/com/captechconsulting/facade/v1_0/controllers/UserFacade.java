@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,7 @@ public class UserFacade {
     @Autowired
     private DozerBeanMapper mapper;
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET, produces = Versions.V1_0, consumes = Versions.V1_0)
     public @ResponseBody UserVO getUser(@PathVariable long userId) {
         if (LOGGER.isDebugEnabled()) {
@@ -40,6 +42,7 @@ public class UserFacade {
         return mapToUserVO(user);
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/{userId}", method = RequestMethod.POST, produces = Versions.V1_0, consumes = Versions.V1_0)
     public @ResponseBody UserVO update(@PathVariable long userId, @Valid @RequestBody UserVO user) {
         if (LOGGER.isDebugEnabled()) {
@@ -54,6 +57,7 @@ public class UserFacade {
         return mapToUserVO(persisted);
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.POST, produces = Versions.V1_0, consumes = Versions.V1_0)
     public @ResponseBody UserVO create(@Valid @RequestBody UserVO user) {
         if (LOGGER.isDebugEnabled()) {
