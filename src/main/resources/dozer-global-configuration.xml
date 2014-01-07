@@ -11,4 +11,13 @@
         <trim-strings>true</trim-strings>
     </configuration>
 
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.core.domain.User</class-a>
+        <class-b>com.captechconsulting.facade.v1_0.data.UserVO</class-b>
+        <field-exclude type="one-way">
+            <a>password</a>
+            <b>password</b>
+        </field-exclude>
+</mapping>
+
 </mappings>
