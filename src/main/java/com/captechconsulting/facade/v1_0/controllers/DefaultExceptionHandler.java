@@ -6,8 +6,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -96,26 +94,6 @@ public class DefaultExceptionHandler {
         map.put("error", "Unsupported Media Type");
         map.put("cause", ex.getLocalizedMessage());
         map.put("supported", ex.getSupportedMediaTypes());
-        return map;
-    }
-
-    @RequestMapping(produces = Versions.V1_0)
-    @ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    public @ResponseBody Map handleAuthenticationException(AuthenticationCredentialsNotFoundException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("error", "Auth Error");
-        map.put("cause", ex.getLocalizedMessage());
-        return map;
-    }
-
-    @RequestMapping(produces = Versions.V1_0)
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public @ResponseBody Map handleAuthenticationException(AuthenticationException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("error", "Auth Error");
-        map.put("cause", ex.getLocalizedMessage());
         return map;
     }
 
