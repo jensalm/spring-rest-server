@@ -25,4 +25,14 @@ public class UserService {
             return userDao.create(user);
         }
     }
+
+    public void delete(User user) {
+
+        if (user.getId() != null) {
+            userDao.delete(user);
+        } else {
+            userDao.delete(user);
+        }
+    }
+
 }

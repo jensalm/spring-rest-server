@@ -105,6 +105,6 @@ public class UserVO {
     @Override
     public String toString() {
         return "UserVO{ id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' + ", password='" + password + '\'' + ", confirmPassword='" + confirmPassword + '\'' + '}';
+                ", email='" + email + '\'' + ", password='[protected]'" + ", confirmPassword='[protected]'" + '}';
     }
 }
