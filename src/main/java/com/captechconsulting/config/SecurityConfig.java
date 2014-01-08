@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.servlet.ServletException;
@@ -40,7 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 and().
 
-                exceptionHandling().accessDeniedHandler(new CustomeAccessDeniedHandler()).
+                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+
+                and().
+
+                exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).
 
                 and().
 
@@ -52,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    public static class CustomeAccessDeniedHandler implements AccessDeniedHandler {
+    public static class CustomAccessDeniedHandler implements AccessDeniedHandler {
         @Override
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
