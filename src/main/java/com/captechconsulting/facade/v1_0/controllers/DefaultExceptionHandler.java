@@ -29,8 +29,8 @@ public class DefaultExceptionHandler {
             ServletRequestBindingException.class
     })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody Map handleRequestException(Exception ex) {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleRequestException(Exception ex) {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Request Error");
         map.put("cause", ex.getMessage());
         return map;
@@ -39,8 +39,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody Map handleValidationException(ConstraintViolationException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleValidationException(ConstraintViolationException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Validation Failure");
         map.put("violations", convertConstraintViolation(ex.getConstraintViolations()));
         return map;
@@ -49,8 +49,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody Map handleValidationException(MethodArgumentNotValidException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleValidationException(MethodArgumentNotValidException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Validation Failure");
         map.put("violations", convertConstraintViolation(ex));
         return map;
@@ -59,8 +59,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(ObjectRetrievalFailureException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public @ResponseBody Map handleValidationException(ObjectRetrievalFailureException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleValidationException(ObjectRetrievalFailureException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Entity Not Found");
         map.put("cause", ex.getMessage());
         return map;
@@ -69,8 +69,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    public @ResponseBody Map handleDataIntegrityViolationException(DataIntegrityViolationException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Data Integrity Error");
         map.put("cause", ex.getCause().getCause().getLocalizedMessage());
         return map;
@@ -79,8 +79,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public @ResponseBody Map handleDataAccessException(DataAccessException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleDataAccessException(DataAccessException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Data Error");
         map.put("cause", ex.getCause().getMessage());
         return map;
@@ -89,8 +89,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-    public @ResponseBody Map handleUnsupportedMediaTypeException(HttpMediaTypeNotSupportedException ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleUnsupportedMediaTypeException(HttpMediaTypeNotSupportedException ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Unsupported Media Type");
         map.put("cause", ex.getLocalizedMessage());
         map.put("supported", ex.getSupportedMediaTypes());
@@ -100,8 +100,8 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = Versions.V1_0)
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public @ResponseBody Map handleUncaughtException(Exception ex) throws IOException {
-        Map<String, Object> map = Maps.newHashMap();
+    public @ResponseBody Map<String, Object> handleUncaughtException(Exception ex) throws IOException {
+        Map<String, Object>  map = Maps.newHashMap();
         map.put("error", "Unknown Error");
         if (ex.getCause() != null) {
             map.put("cause", ex.getCause().getMessage());
@@ -111,10 +111,10 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    private Map<String, Map<String, Object>> convertConstraintViolation(Set<ConstraintViolation<?>> constraintViolations) {
-        Map<String, Map<String, Object>> result = Maps.newHashMap();
+    private Map<String, Map<String, Object> > convertConstraintViolation(Set<ConstraintViolation<?>> constraintViolations) {
+        Map<String, Map<String, Object> > result = Maps.newHashMap();
         for (ConstraintViolation constraintViolation : constraintViolations) {
-            Map<String, Object> violationMap = Maps.newHashMap();
+            Map<String, Object>  violationMap = Maps.newHashMap();
             violationMap.put("value", constraintViolation.getInvalidValue());
             violationMap.put("type", constraintViolation.getRootBeanClass());
             violationMap.put("message", constraintViolation.getMessage());
@@ -123,10 +123,10 @@ public class DefaultExceptionHandler {
         return result;
     }
 
-    private Map<String, Map<String, Object>> convertConstraintViolation(MethodArgumentNotValidException ex) {
-        Map<String, Map<String, Object>> result = Maps.newHashMap();
+    private Map<String, Map<String, Object> > convertConstraintViolation(MethodArgumentNotValidException ex) {
+        Map<String, Map<String, Object> > result = Maps.newHashMap();
         for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-            Map<String, Object> violationMap = Maps.newHashMap();
+            Map<String, Object>  violationMap = Maps.newHashMap();
             violationMap.put("target", ex.getBindingResult().getTarget());
             violationMap.put("type", ex.getBindingResult().getTarget().getClass());
             violationMap.put("message", error.getDefaultMessage());
