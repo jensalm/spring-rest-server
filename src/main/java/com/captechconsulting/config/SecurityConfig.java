@@ -16,10 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Configuration
 @EnableWebMvcSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String ACCESS_DENIED_JSON = "{\"message\":\"You are not privileged to request this resource.\", \"access-denied\":true,\"cause\":\"AUTHORIZATION_FAILURE\"}";
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -63,7 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             response.setContentType(Versions.V1_0);
             response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage());
-            response.flushBuffer();
+            PrintWriter out = response.getWriter();
+            out.print(ACCESS_DENIED_JSON);
+            out.flush();
+            out.close();
+
         }
     }
 
