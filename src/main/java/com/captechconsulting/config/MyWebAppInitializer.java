@@ -36,7 +36,7 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         addEncodingFilter(container);
 
         // Register Required Header filter
-        addRequiredHeaderFilter(container);
+        //addRequiredHeaderFilter(container);
 
         // Register Logging Filter
         addLoggingFilter(container);

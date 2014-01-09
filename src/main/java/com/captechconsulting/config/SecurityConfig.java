@@ -1,6 +1,7 @@
 package com.captechconsulting.config;
 
 import com.captechconsulting.facade.Versions;
+import com.captechconsulting.security.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,13 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.
                 csrf().disable().
-                httpBasic().realmName("CapTech Rest API").
+                formLogin().successHandler(new CustomAuthenticationSuccessHandler()).
 
                 and().
 
+/*
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
 
                 and().
+*/
 
                 exceptionHandling().
                 accessDeniedHandler(new CustomAccessDeniedHandler()).
@@ -58,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 and().
 
                 authorizeRequests().
+                antMatchers(HttpMethod.POST, "/login", "/j_spring_security_logout").permitAll().
                 antMatchers(HttpMethod.GET, "/**").hasRole("USER").
                 antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN").
                 antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN").
