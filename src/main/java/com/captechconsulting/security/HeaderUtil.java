@@ -17,7 +17,7 @@ public class HeaderUtil {
 
     private static final String HEADER_NAME = "X-Auth-Token";
 
-    private int maxAge = 60 * 5;
+    private int maxAge = 1000 * 60 * 2; // 2 Minutes
     private String seed = "%DU)FöfI8/°";
 
     public String getUserName(HttpServletRequest request) {
@@ -32,7 +32,7 @@ public class HeaderUtil {
             String[] split = decryptedValue.split("\\|");
             String username = split[0];
             Long timestamp = Long.parseLong(split[1]);
-            if (timestamp + maxAge < System.currentTimeMillis()) {
+            if (timestamp > System.currentTimeMillis() - maxAge) {
                 return username;
             }
         } catch (IOException | GeneralSecurityException e) {
@@ -43,12 +43,16 @@ public class HeaderUtil {
 
     public void addHeader(HttpServletResponse response, String userName) {
         try {
-            String value = userName + "|" + System.currentTimeMillis();
-            String encryptedValue = encryptionUtil.encrypt(value, seed);
-            response.addHeader(HEADER_NAME, encryptedValue);
+            String encryptedValue = createAuthToken(userName);
+            response.setHeader(HEADER_NAME, encryptedValue);
         } catch (IOException | GeneralSecurityException e) {
             LOG.error("Unable to encrypt header", e);
         }
+    }
+
+    public String createAuthToken(String userName) throws IOException, GeneralSecurityException {
+        String value = userName + "|" + System.currentTimeMillis();
+        return encryptionUtil.encrypt(value, seed);
     }
 
     public void encryptionUtil(EncryptionUtil encryptionUtil) {
@@ -63,7 +67,4 @@ public class HeaderUtil {
         this.maxAge = maxAge;
     }
 
-    public void clearHeader(HttpServletResponse response) {
-        response.addHeader(HEADER_NAME, "");
-    }
 }

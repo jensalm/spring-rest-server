@@ -32,15 +32,11 @@ public class CookieAuthenticationFilter extends GenericFilterBean {
 
         try {
             SecurityContextHolder.setContext(contextBeforeChainExecution);
-            filterChain.doFilter(request, response);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-            if (authentication.isAuthenticated()) {
-                User user = (User) authentication.getPrincipal();
-                headerUtil.addHeader((HttpServletResponse) response, user.getUsername());
-            } else {
-                headerUtil.clearHeader((HttpServletResponse) response);
+            if (contextBeforeChainExecution.getAuthentication() != null && contextBeforeChainExecution.getAuthentication().isAuthenticated()) {
+                String userName = (String) contextBeforeChainExecution.getAuthentication().getPrincipal();
+                headerUtil.addHeader((HttpServletResponse) response, userName);
             }
+            filterChain.doFilter(request, response);
         }
         finally {
             // Clear the context and free the thread local

@@ -2,6 +2,9 @@ package com.captechconsulting.config;
 
 import com.captechconsulting.facade.Versions;
 import com.captechconsulting.security.CookieAuthenticationFilter;
+import com.captechconsulting.security.HeaderUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +16,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -25,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -52,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 csrf().disable().
 
-                formLogin().successHandler(successHandler()).
+                formLogin().successHandler(new CustomAuthenticationSuccessHandler()).
                 loginProcessingUrl("/login").
 
                 and().
@@ -80,10 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN").
                 anyRequest().authenticated();
 
-    }
-
-    private AuthenticationSuccessHandler successHandler() {
-        return new CustomAuthenticationSuccessHandler();
     }
 
     private Filter authenticationFilter() {
@@ -121,10 +122,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+        private HeaderUtil headerUtil = new HeaderUtil();
+
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                             Authentication authentication) throws ServletException, IOException {
-
+            try {
+                String token = headerUtil.createAuthToken(((User) authentication.getPrincipal()).getUsername());
+                ObjectMapper mapper = new ObjectMapper();
+                ObjectNode node = mapper.createObjectNode().put("token", token);
+                PrintWriter out = response.getWriter();
+                out.print(node.toString());
+                out.flush();
+                out.close();
+            } catch (GeneralSecurityException e) {
+                throw new ServletException("Unable to create the auth token", e);
+            }
             clearAuthenticationAttributes(request);
 
         }
