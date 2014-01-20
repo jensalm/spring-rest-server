@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.facade.v1_0.data.TicketVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Ticket</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.facade.v1_0.data.AddressVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Address</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.facade.v1_0.data.LocationVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Location</class-b>
+    </mapping>
+
+</mappings>

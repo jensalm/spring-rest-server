@@ -3,6 +3,7 @@ package com.captechconsulting.core.domain;
 import com.google.common.collect.Lists;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -16,12 +17,15 @@ public class Ticket {
 
     private String lastName;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    @NotNull
     @Column(unique = true, nullable = false)
     private String email;
 
+    @NotNull
     @Column(nullable = false)
     private String packageNumber;
 

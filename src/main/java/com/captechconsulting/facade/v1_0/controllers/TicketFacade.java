@@ -25,16 +25,25 @@ public class TicketFacade {
     private MappingService mappingService;
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.GET, produces = Versions.V1_0, consumes = Versions.V1_0)
-    public TicketVO getUser(@PathVariable long ticketId) {
+    public TicketVO read(@PathVariable long ticketId) {
         Ticket ticket = ticketService.get(ticketId);
         return mappingService.map(ticket, TicketVO.class);
     }
 
-    @RequestMapping(value = "/{ticketId}", method = RequestMethod.PUT, produces = Versions.V1_0, consumes = Versions.V1_0)
+    @RequestMapping(value = "/{ticketId}", method = RequestMethod.PATCH, produces = Versions.V1_0, consumes = Versions.V1_0)
     public TicketVO update(@PathVariable long ticketId, @Valid @RequestBody TicketVO ticket) {
         Ticket previouslyPersisted = ticketService.get(ticketId);
         mappingService.map(ticket, previouslyPersisted);
         Ticket persisted = ticketService.store(previouslyPersisted);
+        return mappingService.map(persisted, TicketVO.class);
+    }
+
+    @RequestMapping(value = "/{ticketId}", method = RequestMethod.PUT, produces = Versions.V1_0, consumes = Versions.V1_0)
+    public TicketVO replace(@PathVariable long ticketId, @Valid @RequestBody TicketVO ticket) {
+        Ticket previouslyPersisted = ticketService.get(ticketId);
+        Ticket newTicket = mappingService.map(ticket, Ticket.class);
+        newTicket.setId(previouslyPersisted.getId());
+        Ticket persisted = ticketService.store(newTicket);
         return mappingService.map(persisted, TicketVO.class);
     }
 

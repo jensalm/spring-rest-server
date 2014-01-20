@@ -20,10 +20,8 @@ public class TicketVO {
     private AddressVO address;
 
     @Email
-    @NotNull
     private String email;
 
-    @NotNull
     @PackageNumber
     private String packageNumber;
 

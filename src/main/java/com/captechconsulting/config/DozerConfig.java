@@ -14,7 +14,7 @@ public class DozerConfig {
     @Scope("singleton")
     public DozerBeanMapper getMapper() {
         return new DozerBeanMapper(
-                Arrays.asList("dozer-global-configuration.xml")
+                Arrays.asList("dozer-global-configuration.xml", "dozer-mapping.xml")
         );
     }
 
