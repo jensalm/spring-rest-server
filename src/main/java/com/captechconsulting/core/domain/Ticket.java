@@ -1,9 +1,12 @@
 package com.captechconsulting.core.domain;
 
+import com.google.common.collect.Lists;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class User {
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,11 +16,17 @@ public class User {
 
     private String lastName;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private String packageNumber;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private List<Location> locations = Lists.newArrayList();
 
     public Long getId() {
         return id;
@@ -51,11 +60,27 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPackageNumber() {
+        return packageNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setPackageNumber(String packageNumber) {
+        this.packageNumber = packageNumber;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 }
