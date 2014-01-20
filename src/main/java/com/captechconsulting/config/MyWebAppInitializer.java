@@ -1,6 +1,5 @@
 package com.captechconsulting.config;
 
-import com.captechconsulting.filter.RequiredHeaderFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
@@ -18,7 +17,7 @@ import java.util.Set;
 public class MyWebAppInitializer implements WebApplicationInitializer {
 
     private static final Logger LOG = LoggerFactory.getLogger(MyWebAppInitializer.class);
-    private static final String SERVICES_MAPPING = "/";
+    private static final String SERVICES_MAPPING = "/services/*";
 
     @Override
     public void onStartup(ServletContext container) {
@@ -26,17 +25,12 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         // Register application config
         rootContext.register(AppConfig.class);
-        // Register dispatcher servlet's config
-        rootContext.register(DispatcherConfig.class);
 
         // Manage the lifecycle of the root application context
         container.addListener(new ContextLoaderListener(rootContext));
 
         // Register Encoding Filter
         addEncodingFilter(container);
-
-        // Register Required Header filter
-        //addRequiredHeaderFilter(container);
 
         // Register Logging Filter
         addLoggingFilter(container);
@@ -67,11 +61,6 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
 
     private void addLoggingFilter(ServletContext container) {
         FilterRegistration.Dynamic fr = container.addFilter("loggingFilter", new CommonsRequestLoggingFilter());
-        fr.addMappingForUrlPatterns(null, true, "/*");
-    }
-
-    private void addRequiredHeaderFilter(ServletContext container) {
-        FilterRegistration.Dynamic fr = container.addFilter("requiredHeaderFilter", new RequiredHeaderFilter());
         fr.addMappingForUrlPatterns(null, true, "/*");
     }
 

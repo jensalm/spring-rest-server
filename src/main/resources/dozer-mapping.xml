@@ -5,12 +5,18 @@
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
     <mapping map-null="false">
-        <class-a>com.captechconsulting.core.domain.User</class-a>
-        <class-b>com.captechconsulting.facade.v1_0.data.UserVO</class-b>
-        <field-exclude type="one-way">
-            <a>password</a>
-            <b>password</b>
-        </field-exclude>
+        <class-a>com.captechconsulting.facade.v1_0.data.TicketVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Ticket</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.facade.v1_0.data.AddressVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Address</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.captechconsulting.facade.v1_0.data.LocationVO</class-a>
+        <class-b>com.captechconsulting.core.domain.Location</class-b>
     </mapping>
 
 </mappings>

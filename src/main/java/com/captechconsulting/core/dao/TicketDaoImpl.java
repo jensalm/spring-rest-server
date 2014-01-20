@@ -1,14 +1,14 @@
 package com.captechconsulting.core.dao;
 
-import com.captechconsulting.core.domain.User;
+import com.captechconsulting.core.domain.Ticket;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public class UserDaoJPAImpl extends AbstractJPADao<User> implements UserDao {
+public class TicketDaoImpl extends AbstractDao<Ticket> implements TicketDao {
 
-    public UserDaoJPAImpl() {
-        super(User.class);
+    public TicketDaoImpl() {
+        super(Ticket.class);
     }
 }

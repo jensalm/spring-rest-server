@@ -10,14 +10,14 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
-public class AbstractJPADao<T> implements Dao<T> {
+public class AbstractDao<T> implements Dao<T> {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     private Class<T> clazz;
 
-    public AbstractJPADao(Class<T> clazz) {
+    public AbstractDao(Class<T> clazz) {
         this.clazz = clazz;
     }
 
