@@ -6,7 +6,6 @@ import com.captechconsulting.core.service.MappingService;
 import com.captechconsulting.core.service.TicketService;
 import com.captechconsulting.facade.Versions;
 import com.captechconsulting.facade.v1_0.data.LocationVO;
-import com.captechconsulting.facade.v1_0.data.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,10 +52,9 @@ public class LocationFacade {
 
     @RequestMapping(value = "/{ticketId}/location/{locationId}", method = RequestMethod.DELETE, produces = Versions.V1_0, consumes = Versions.V1_0)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public TicketVO remove(@PathVariable long ticketId, @PathVariable long locationId) {
+    public void remove(@PathVariable long ticketId, @PathVariable long locationId) {
         Ticket ticket = ticketService.get(ticketId);
         ticketService.deleteLocation(ticket, locationId);
-        return null;
     }
 
 }

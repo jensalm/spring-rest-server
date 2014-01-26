@@ -26,7 +26,7 @@ public class TicketService {
         return ticketDao.findById(id);
     }
 
-    public List<Ticket> listAll(int page, int size) {
+    public List<Ticket> list(int page, int size) {
         return ticketDao.findAll(page, size);
     }
 
