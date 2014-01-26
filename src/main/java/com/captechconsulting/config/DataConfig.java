@@ -19,7 +19,6 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:config.properties")
 public class DataConfig {
 
     @Autowired

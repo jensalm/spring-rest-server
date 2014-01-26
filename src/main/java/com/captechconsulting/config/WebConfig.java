@@ -18,7 +18,6 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@PropertySource("classpath:config.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Autowired

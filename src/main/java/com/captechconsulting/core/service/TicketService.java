@@ -46,15 +46,6 @@ public class TicketService {
         }
     }
 
-    public Location getLocation(Ticket ticket, Long locationId) {
-        Location location = locationDao.findById(locationId);
-        if (ticket.getLocations().contains(location)) {
-            return location;
-        }
-
-        throw new ObjectRetrievalFailureException(Location.class, locationId);
-    }
-
     public void addLocation(Ticket ticket, Location location) {
         ticket.getLocations().add(location);
         store(ticket);
