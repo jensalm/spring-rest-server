@@ -17,7 +17,7 @@ import java.util.Set;
 public class MyWebAppInitializer implements WebApplicationInitializer {
 
     private static final Logger LOG = LoggerFactory.getLogger(MyWebAppInitializer.class);
-    private static final String SERVICES_MAPPING = "/services/*";
+    private static final String SERVICES_MAPPING = "/";
 
     @Override
     public void onStartup(ServletContext container) {

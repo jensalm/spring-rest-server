@@ -26,6 +26,10 @@ public class TicketService {
         return ticketDao.findById(id);
     }
 
+    public List<Ticket> listAll(int page, int size) {
+        return ticketDao.findAll(page, size);
+    }
+
     public Ticket store(Ticket ticket) {
         if (ticket.getId() != null) {
             return ticketDao.update(ticket);
@@ -69,5 +73,4 @@ public class TicketService {
 
         throw new ObjectRetrievalFailureException(Location.class, locationId);
     }
-
 }

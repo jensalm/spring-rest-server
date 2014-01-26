@@ -8,10 +8,10 @@ import com.captechconsulting.facade.v1_0.data.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Transactional
 @RestController
@@ -23,6 +23,13 @@ public class TicketFacade {
 
     @Autowired
     private MappingService mappingService;
+
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = Versions.V1_0, consumes = Versions.V1_0)
+    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "1") int page,
+                               @RequestParam(value = "size", defaultValue = "10") int size) {
+        List<Ticket> tickets = ticketService.listAll(page, size);
+        return mappingService.map(tickets, TicketVO.class);
+    }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.GET, produces = Versions.V1_0, consumes = Versions.V1_0)
     public TicketVO read(@PathVariable long ticketId) {

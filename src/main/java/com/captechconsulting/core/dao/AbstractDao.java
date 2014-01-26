@@ -80,7 +80,7 @@ public class AbstractDao<T> implements Dao<T> {
 
     protected void addPagination(TypedQuery query, int page, int size) {
         if (size > 0) {
-            int firstResult = page * size;
+            int firstResult = (page - 1) * size;
             query.setFirstResult(firstResult);
             query.setMaxResults(size);
         }
