@@ -23,7 +23,7 @@ import java.util.Set;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler({MissingServletRequestParameterException.class,
             UnsatisfiedServletRequestParameterException.class,
             ServletRequestBindingException.class
@@ -36,7 +36,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public @ResponseBody Map<String, Object> handleValidationException(ConstraintViolationException ex) throws IOException {
@@ -46,7 +46,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public @ResponseBody Map<String, Object> handleValidationException(MethodArgumentNotValidException ex) throws IOException {
@@ -56,7 +56,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(ObjectRetrievalFailureException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public @ResponseBody Map<String, Object> handleValidationException(ObjectRetrievalFailureException ex) throws IOException {
@@ -66,7 +66,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public @ResponseBody Map<String, Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) throws IOException {
@@ -76,7 +76,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody Map<String, Object> handleDataAccessException(DataAccessException ex) throws IOException {
@@ -86,7 +86,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(value = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     public @ResponseBody Map<String, Object> handleUnsupportedMediaTypeException(HttpMediaTypeNotSupportedException ex) throws IOException {
@@ -97,7 +97,7 @@ public class DefaultExceptionHandler {
         return map;
     }
 
-    @RequestMapping(produces = Versions.V1_0)
+    @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody Map<String, Object> handleUncaughtException(Exception ex) throws IOException {
