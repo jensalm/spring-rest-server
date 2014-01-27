@@ -17,7 +17,6 @@ import java.util.Set;
 public class MyWebAppInitializer implements WebApplicationInitializer {
 
     private static final Logger LOG = LoggerFactory.getLogger(MyWebAppInitializer.class);
-    private static final String SERVICES_MAPPING = "/";
 
     @Override
     public void onStartup(ServletContext container) {
@@ -40,6 +39,8 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
     }
 
     private void addServiceDispatcherServlet(ServletContext container, AnnotationConfigWebApplicationContext rootContext) {
+        final String SERVICES_MAPPING = "/";
+
         ServletRegistration.Dynamic dispatcher = container.addServlet("servicesDispatcher", new DispatcherServlet(rootContext));
         dispatcher.setLoadOnStartup(1);
         Set<String> mappingConflicts = dispatcher.addMapping(SERVICES_MAPPING);
