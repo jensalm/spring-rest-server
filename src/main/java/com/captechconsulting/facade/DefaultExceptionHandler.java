@@ -1,6 +1,5 @@
-package com.captechconsulting.facade.v1_0.controllers;
+package com.captechconsulting.facade;
 
-import com.captechconsulting.facade.Versions;
 import com.google.common.collect.Maps;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
