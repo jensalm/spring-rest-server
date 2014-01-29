@@ -1,7 +1,7 @@
 package com.captechconsulting.config;
 
 import com.captechconsulting.facade.Versions;
-import com.captechconsulting.security.CookieAuthenticationFilter;
+import com.captechconsulting.security.HeaderAuthenticationFilter;
 import com.captechconsulting.security.HeaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -93,10 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private Filter authenticationFilter() {
-        CookieAuthenticationFilter cookieAuthenticationFilter = new CookieAuthenticationFilter();
-        cookieAuthenticationFilter.userDetailsService(userDetailsService());
-        cookieAuthenticationFilter.headerUtil(headerUtil);
-        return cookieAuthenticationFilter;
+        HeaderAuthenticationFilter headerAuthenticationFilter = new HeaderAuthenticationFilter();
+        headerAuthenticationFilter.userDetailsService(userDetailsService());
+        headerAuthenticationFilter.headerUtil(headerUtil);
+        return headerAuthenticationFilter;
     }
 
     private static class CustomAccessDeniedHandler implements AccessDeniedHandler {

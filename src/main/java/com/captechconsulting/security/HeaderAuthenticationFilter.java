@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CookieAuthenticationFilter extends GenericFilterBean {
+public class HeaderAuthenticationFilter extends GenericFilterBean {
 
     private UserDetailsService userDetailsService;
 
