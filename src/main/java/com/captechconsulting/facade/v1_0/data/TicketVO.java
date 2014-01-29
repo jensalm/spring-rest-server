@@ -3,7 +3,6 @@ package com.captechconsulting.facade.v1_0.data;
 import com.captechconsulting.facade.v1_0.validators.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @MatchingPackageNumbers
 public class TicketVO {
@@ -19,8 +18,8 @@ public class TicketVO {
     @Valid
     private AddressVO address;
 
-    @Email
-    private String email;
+    @PhoneNumber
+    private String phoneNumber;
 
     @PackageNumber
     private String packageNumber;
@@ -51,12 +50,12 @@ public class TicketVO {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public AddressVO getAddress() {
@@ -90,7 +89,7 @@ public class TicketVO {
 
         TicketVO ticketVO = (TicketVO) o;
 
-        return !(email != null ? !email.equals(ticketVO.email) : ticketVO.email != null) &&
+        return !(phoneNumber != null ? !phoneNumber.equals(ticketVO.phoneNumber) : ticketVO.phoneNumber != null) &&
                 !(firstName != null ? !firstName.equals(ticketVO.firstName) : ticketVO.firstName != null) &&
                 !(id != null ? !id.equals(ticketVO.id) : ticketVO.id != null) &&
                 !(lastName != null ? !lastName.equals(ticketVO.lastName) : ticketVO.lastName != null) &&
@@ -104,7 +103,7 @@ public class TicketVO {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (packageNumber != null ? packageNumber.hashCode() : 0);
         result = 31 * result + (confirmPackageNumber != null ? confirmPackageNumber.hashCode() : 0);
         return result;
@@ -113,6 +112,6 @@ public class TicketVO {
     @Override
     public String toString() {
         return "TicketVO{ id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' + ", packageNumber='[protected]'" + ", confirmPackageNumber='[protected]'" + '}';
+                ", phoneNumber='" + phoneNumber + '\'' + ", packageNumber='[protected]'" + ", confirmPackageNumber='[protected]'" + '}';
     }
 }

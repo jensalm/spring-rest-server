@@ -1,14 +1,23 @@
 package com.captechconsulting.security;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+@Component
 public class HeaderUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeaderUtil.class);
@@ -17,8 +26,22 @@ public class HeaderUtil {
 
     private static final String HEADER_NAME = "X-Auth-Token";
 
-    private int maxAge = 1000 * 60 * 2; // 2 Minutes
-    private String seed = "%DU)FöfI8/°";
+    private Period sessionMaxAge;
+
+    private String seed;
+
+    @Autowired
+    private Environment environment;
+
+    @PostConstruct
+    private void init() {
+        String encryptionEnabled = environment.getProperty("auth.encryption.enabled");
+        if (StringUtils.isNotBlank(encryptionEnabled) && Boolean.parseBoolean(encryptionEnabled)) {
+            encryptionUtil.encryptionEnabled(true);
+            seed = environment.getRequiredProperty("auth.encryption.seed");
+        }
+        sessionMaxAge = getSessionMaxAge();
+    }
 
     public String getUserName(HttpServletRequest request) {
         String header = request.getHeader(HEADER_NAME);
@@ -31,8 +54,8 @@ public class HeaderUtil {
             String decryptedValue = encryptionUtil.decrypt(value, seed);
             String[] split = decryptedValue.split("\\|");
             String username = split[0];
-            Long timestamp = Long.parseLong(split[1]);
-            if (timestamp > System.currentTimeMillis() - maxAge) {
+            DateTime timestamp =  new DateTime(Long.parseLong(split[1]));
+            if (timestamp.isAfter(DateTime.now().minus(sessionMaxAge))) {
                 return username;
             }
         } catch (IOException | GeneralSecurityException e) {
@@ -55,16 +78,37 @@ public class HeaderUtil {
         return encryptionUtil.encrypt(value, seed);
     }
 
-    public void encryptionUtil(EncryptionUtil encryptionUtil) {
-        this.encryptionUtil = encryptionUtil;
+    private Period getSessionMaxAge() {
+        String maxAge = environment.getRequiredProperty("auth.session.maxAge");
+        PeriodFormatter format = new PeriodFormatterBuilder()
+                .appendDays()
+                .appendSuffix("d", "d")
+                .printZeroRarelyFirst()
+                .appendHours()
+                .appendSuffix("h", "h")
+                .printZeroRarelyFirst()
+                .appendMinutes()
+                .appendSuffix("m", "m")
+                .toFormatter();
+        Period sessionMaxAge = format.parsePeriod(maxAge);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Session maxAge is: "+
+                    formatIfNotZero(sessionMaxAge.getDays(), "days", "day") +
+                    formatIfNotZero(sessionMaxAge.getHours(), "hours", "hour") +
+                    formatIfNotZero(sessionMaxAge.getMinutes(), "minutes", "minute")
+            );
+        }
+        return sessionMaxAge;
     }
 
-    public void seed(String seed) {
-        this.seed = seed;
-    }
-
-    public void maxAge(int maxAge) {
-        this.maxAge = maxAge;
+    private static String formatIfNotZero(int value, String plural, String singleton) {
+        if (value > 0) {
+            if (value > 1) {
+                return "" + value + " " + plural;
+            }
+            return "" + value + " " + singleton;
+        }
+        return "";
     }
 
 }

@@ -11,7 +11,6 @@ import java.util.Arrays;
 public class DozerConfig {
 
     @Bean
-    @Scope("singleton")
     public DozerBeanMapper getMapper() {
         return new DozerBeanMapper(
                 Arrays.asList("dozer-global-configuration.xml", "dozer-mapping.xml")

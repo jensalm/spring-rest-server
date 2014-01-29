@@ -26,6 +26,10 @@ public class TicketService {
         return ticketDao.findById(id);
     }
 
+    public List<Ticket> list(int page, int size) {
+        return ticketDao.findAll(page, size);
+    }
+
     public Ticket store(Ticket ticket) {
         if (ticket.getId() != null) {
             return ticketDao.update(ticket);
@@ -40,15 +44,6 @@ public class TicketService {
         } else {
             ticketDao.delete(ticket);
         }
-    }
-
-    public Location getLocation(Ticket ticket, Long locationId) {
-        Location location = locationDao.findById(locationId);
-        if (ticket.getLocations().contains(location)) {
-            return location;
-        }
-
-        throw new ObjectRetrievalFailureException(Location.class, locationId);
     }
 
     public void addLocation(Ticket ticket, Location location) {
@@ -69,5 +64,4 @@ public class TicketService {
 
         throw new ObjectRetrievalFailureException(Location.class, locationId);
     }
-
 }

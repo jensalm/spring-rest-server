@@ -1,7 +1,7 @@
 package com.captechconsulting.config;
 
 import com.captechconsulting.facade.Versions;
-import com.captechconsulting.security.CookieAuthenticationFilter;
+import com.captechconsulting.security.HeaderAuthenticationFilter;
 import com.captechconsulting.security.HeaderUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -19,7 +19,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
@@ -39,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String UNAUTHORIZED_JSON = "{\"message\":\"Full authentication is required to access this resource.\", \"access-denied\":true,\"cause\":\"NOT AUTHENTICATED\"}";
 
     @Autowired
+    private HeaderUtil headerUtil;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().
 
@@ -52,12 +54,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        CustomAuthenticationSuccessHandler successHandler = new CustomAuthenticationSuccessHandler();
+        successHandler.headerUtil(headerUtil);
+
         http.
                 addFilterBefore(authenticationFilter(), LogoutFilter.class).
 
                 csrf().disable().
 
-                formLogin().successHandler(new CustomAuthenticationSuccessHandler()).
+                formLogin().successHandler(successHandler).
                 loginProcessingUrl("/login").
 
                 and().
@@ -88,9 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private Filter authenticationFilter() {
-        CookieAuthenticationFilter cookieAuthenticationFilter = new CookieAuthenticationFilter();
-        cookieAuthenticationFilter.userDetailsService(userDetailsService());
-        return cookieAuthenticationFilter;
+        HeaderAuthenticationFilter headerAuthenticationFilter = new HeaderAuthenticationFilter();
+        headerAuthenticationFilter.userDetailsService(userDetailsService());
+        headerAuthenticationFilter.headerUtil(headerUtil);
+        return headerAuthenticationFilter;
     }
 
     private static class CustomAccessDeniedHandler implements AccessDeniedHandler {
@@ -122,7 +128,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-        private HeaderUtil headerUtil = new HeaderUtil();
+        private HeaderUtil headerUtil;
 
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -142,6 +148,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         }
 
+        private void headerUtil(HeaderUtil headerUtil) {
+            this.headerUtil = headerUtil;
+        }
     }
 
 }
