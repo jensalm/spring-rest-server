@@ -15,9 +15,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Transactional
-@RestController
+@RestController("TicketFacadeV2")
 @RequestMapping(value = "/ticket", produces = Versions.V2_0, consumes = Versions.V2_0)
-public class TicketFacadeV2 {
+public class TicketFacade {
 
     @Autowired
     private TicketService ticketService;
