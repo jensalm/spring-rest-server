@@ -237,11 +237,6 @@
             <version>1.7</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
@@ -251,6 +246,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.3</version>
         </dependency>
+
 
         <!-- Test -->
         <dependency>
