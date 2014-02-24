@@ -1,22 +1,21 @@
 package com.captechconsulting.facade.v1_0.data;
 
-import com.captechconsulting.facade.v1_0.validators.Numeric;
+import com.captechconsulting.facade.v1_0.validators.Alphabetic;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import java.util.Date;
+import javax.validation.Valid;
 
 public class LocationVO {
 
     private Long id;
 
-    @NotNull
-    @Numeric
-    private String locationId;
+    @Alphabetic
+    private String name;
 
-    @NotNull
-    @Past
-    private Date timestamp;
+    @Valid
+    private AddressVO address;
 
     public Long getId() {
         return id;
@@ -26,19 +25,34 @@ public class LocationVO {
         this.id = id;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public String getName() {
+        return name;
     }
 
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public AddressVO getAddress() {
+        return address;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setAddress(AddressVO address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

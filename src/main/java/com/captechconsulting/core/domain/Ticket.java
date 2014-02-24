@@ -36,7 +36,7 @@ public class Ticket {
     private String packageNumber;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Location> locations = Lists.newArrayList();
+    private List<LocationScan> locationScans = Lists.newArrayList();
 
     public Long getId() {
         return id;
@@ -94,12 +94,12 @@ public class Ticket {
         this.packageNumber = packageNumber;
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public List<LocationScan> getLocationScans() {
+        return locationScans;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setLocationScans(List<LocationScan> locationScans) {
+        this.locationScans = locationScans;
     }
 
     @Override

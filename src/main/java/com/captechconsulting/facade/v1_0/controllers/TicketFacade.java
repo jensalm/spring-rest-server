@@ -25,7 +25,7 @@ public class TicketFacade {
     private MappingService mappingService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "1") int page,
+    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "0") int page,
                                @RequestParam(value = "size", defaultValue = "10") int size) {
         List<Ticket> tickets = ticketService.list(page, size);
         return mappingService.map(tickets, TicketVO.class);

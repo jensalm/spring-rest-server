@@ -7,7 +7,6 @@ import com.captechconsulting.facade.Versions;
 import com.captechconsulting.facade.v2_0.data.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class TicketFacade {
     private MappingService mappingService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "1") int page,
+    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "0") int page,
                                @RequestParam(value = "size", defaultValue = "10") int size) {
         List<Ticket> tickets = ticketService.list(page, size);
         return mappingService.map(tickets, TicketVO.class);

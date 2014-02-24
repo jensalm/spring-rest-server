@@ -1,6 +1,9 @@
 package com.captechconsulting.facade.v1_0.data;
 
 import com.captechconsulting.facade.v1_0.validators.*;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.validation.Valid;
 
@@ -83,35 +86,17 @@ public class TicketVO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TicketVO ticketVO = (TicketVO) o;
-
-        return !(phoneNumber != null ? !phoneNumber.equals(ticketVO.phoneNumber) : ticketVO.phoneNumber != null) &&
-                !(firstName != null ? !firstName.equals(ticketVO.firstName) : ticketVO.firstName != null) &&
-                !(id != null ? !id.equals(ticketVO.id) : ticketVO.id != null) &&
-                !(lastName != null ? !lastName.equals(ticketVO.lastName) : ticketVO.lastName != null) &&
-                !(packageNumber != null ? !packageNumber.equals(ticketVO.packageNumber) : ticketVO.packageNumber != null) &&
-                !(confirmPackageNumber != null ? !confirmPackageNumber.equals(ticketVO.confirmPackageNumber) : ticketVO.confirmPackageNumber != null);
-
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + (packageNumber != null ? packageNumber.hashCode() : 0);
-        result = 31 * result + (confirmPackageNumber != null ? confirmPackageNumber.hashCode() : 0);
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
     public String toString() {
-        return "TicketVO{ id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' + ", packageNumber='[protected]'" + ", confirmPackageNumber='[protected]'" + '}';
+        return ToStringBuilder.reflectionToString(this);
     }
 }

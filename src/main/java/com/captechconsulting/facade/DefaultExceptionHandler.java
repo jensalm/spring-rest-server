@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -25,6 +26,7 @@ public class DefaultExceptionHandler {
     @RequestMapping(produces = {Versions.V1_0, Versions.V2_0})
     @ExceptionHandler({MissingServletRequestParameterException.class,
             UnsatisfiedServletRequestParameterException.class,
+            HttpRequestMethodNotSupportedException.class,
             ServletRequestBindingException.class
     })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
