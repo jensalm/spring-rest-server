@@ -1,6 +1,9 @@
 package com.captechconsulting.core.domain;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,7 +36,7 @@ public class Ticket {
     private String packageNumber;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Location> locations = Lists.newArrayList();
+    private List<LocationScan> locationScans = Lists.newArrayList();
 
     public Long getId() {
         return id;
@@ -91,11 +94,26 @@ public class Ticket {
         this.packageNumber = packageNumber;
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public List<LocationScan> getLocationScans() {
+        return locationScans;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setLocationScans(List<LocationScan> locationScans) {
+        this.locationScans = locationScans;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

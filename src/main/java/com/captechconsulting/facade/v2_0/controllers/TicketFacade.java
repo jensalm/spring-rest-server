@@ -1,10 +1,10 @@
-package com.captechconsulting.facade.v1_0.controllers;
+package com.captechconsulting.facade.v2_0.controllers;
 
 import com.captechconsulting.core.domain.Ticket;
 import com.captechconsulting.core.service.MappingService;
 import com.captechconsulting.core.service.TicketService;
 import com.captechconsulting.facade.Versions;
-import com.captechconsulting.facade.v1_0.data.TicketVO;
+import com.captechconsulting.facade.v2_0.data.TicketVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +14,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Transactional
-@RestController
-@RequestMapping(value = "/ticket", produces = Versions.V1_0, consumes = Versions.V1_0)
-public class TicketFacadeV1 {
+@RestController("TicketFacadeV2")
+@RequestMapping(value = "/ticket", produces = Versions.V2_0, consumes = Versions.V2_0)
+public class TicketFacade {
 
     @Autowired
     private TicketService ticketService;
@@ -25,7 +25,7 @@ public class TicketFacadeV1 {
     private MappingService mappingService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "1") int page,
+    public List<TicketVO> list(@RequestParam(value = "page", defaultValue = "0") int page,
                                @RequestParam(value = "size", defaultValue = "10") int size) {
         List<Ticket> tickets = ticketService.list(page, size);
         return mappingService.map(tickets, TicketVO.class);

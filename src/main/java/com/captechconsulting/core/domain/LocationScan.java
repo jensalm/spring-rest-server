@@ -5,22 +5,20 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-public class Location {
+public class LocationScan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    private String name;
+    @ManyToOne
+    private Location location;
 
-    @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public Long getId() {
         return id;
@@ -30,20 +28,20 @@ public class Location {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public Address getAddress() {
-        return address;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override

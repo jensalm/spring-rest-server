@@ -1,5 +1,9 @@
 package com.captechconsulting.core.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,25 +55,17 @@ public class Address {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Address address = (Address) o;
-
-        return !(city != null ? !city.equals(address.city) : address.city != null) &&
-                !(id != null ? !id.equals(address.id) : address.id != null) &&
-                !(street != null ? !street.equals(address.street) : address.street != null) &&
-                !(zip != null ? !zip.equals(address.zip) : address.zip != null);
-
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (zip != null ? zip.hashCode() : 0);
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
