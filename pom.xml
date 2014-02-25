@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.0.0.RELEASE</org.springframework.version>
+        <org.springframework.version>4.0.1.RELEASE</org.springframework.version>
         <org.springframework.security.version>3.2.0.RELEASE</org.springframework.security.version>
         <org.slf4j.version>1.7.2</org.slf4j.version>
         <org.hibernate.version>4.2.6.Final</org.hibernate.version>
@@ -144,6 +144,11 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.4.3.RELEASE</version>
+        </dependency>
 
         <!-- Spring Security -->
         <dependency>
@@ -237,11 +242,6 @@
             <version>1.7</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
@@ -251,6 +251,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.3</version>
         </dependency>
+
 
         <!-- Test -->
         <dependency>

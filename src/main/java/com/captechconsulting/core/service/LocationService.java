@@ -3,6 +3,7 @@ package com.captechconsulting.core.service;
 import com.captechconsulting.core.dao.LocationDao;
 import com.captechconsulting.core.domain.Location;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,19 +17,15 @@ public class LocationService {
     private LocationDao locationDao;
                           
     public Location get(final long id) {
-        return locationDao.findById(id);
+        return locationDao.findOne(id);
     }
 
     public List<Location> list(int page, int size) {
-        return locationDao.findAll(page, size);
+        return locationDao.findAll(new PageRequest(page, size)).getContent();
     }
 
-    public Location store(Location ticket) {
-        if (ticket.getId() != null) {
-            return locationDao.update(ticket);
-        } else {
-            return locationDao.create(ticket);
-        }
+    public Location store(Location location) {
+        return locationDao.save(location);
     }
 
     public void delete(Location ticket) {
