@@ -37,6 +37,14 @@ public class TicketFacade {
         return mappingService.map(ticket, TicketVO.class);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public TicketVO create(@Valid @RequestBody TicketVO ticket) {
+        Ticket mappedTicket = mappingService.map(ticket, Ticket.class);
+        Ticket persisted = ticketService.store(mappedTicket);
+        return mappingService.map(persisted, TicketVO.class);
+    }
+
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.PATCH)
     public TicketVO update(@PathVariable long ticketId, @Valid @RequestBody TicketVO ticket) {
         Ticket previouslyPersisted = ticketService.get(ticketId);
@@ -51,14 +59,6 @@ public class TicketFacade {
         Ticket newTicket = mappingService.map(ticket, Ticket.class);
         newTicket.setId(previouslyPersisted.getId());
         Ticket persisted = ticketService.store(newTicket);
-        return mappingService.map(persisted, TicketVO.class);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public TicketVO create(@Valid @RequestBody TicketVO ticket) {
-        Ticket mappedTicket = mappingService.map(ticket, Ticket.class);
-        Ticket persisted = ticketService.store(mappedTicket);
         return mappingService.map(persisted, TicketVO.class);
     }
 
