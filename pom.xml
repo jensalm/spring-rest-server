@@ -24,25 +24,25 @@
             <id>JBoss</id>
             <name>JBoss Repsitory</name>
             <layout>default</layout>
-            <url>http://repository.jboss.org/maven2</url>
+            <url>https://repository.jboss.org/maven2</url>
         </repository>
         <repository>
             <id>ibiblio.org</id>
             <name>Ibiblio Repository</name>
-            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+            <url>https://mirrors.ibiblio.org/pub/mirrors/maven2</url>
             <layout>default</layout>
         </repository>
         <repository>
             <id>maven.apache.org</id>
             <name>Maven Repository</name>
-            <url>http://repo1.maven.org/maven2/</url>
+            <url>https://repo1.maven.org/maven2/</url>
             <layout>default</layout>
         </repository>
 
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
-            <url>http://repo.spring.io/milestone</url>
+            <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
